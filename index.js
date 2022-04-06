@@ -33,7 +33,7 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/info', (request, response) => {
     numOfPeople = phonebook.length;
-    now = moment()
+    now = new Date()
     response.send(`Phonebook has info for ${numOfPeople} people <br/>${now}`);
 })
 
