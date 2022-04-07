@@ -1,8 +1,9 @@
 const express = require('express')
-const moment = require('moment')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json'))
 
 let phonebook = [
     { 
@@ -26,6 +27,17 @@ let phonebook = [
       "number": "39-23-6423122"
     }
 ]
+
+morgan.token("json", function(req, res) {
+  if(req.method === 'POST') {
+    return JSON.stringify({
+      name: req.body.name,
+      number: req.body.number
+    })
+  } else {
+    return null
+  }
+})
 
 app.get('/api/persons', (request, response) => {
     response.json(phonebook);
